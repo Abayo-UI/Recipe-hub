@@ -1,13 +1,13 @@
-
-import React, { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Container, Row, Col, Form, InputGroup, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import RecipeCard from '../components/RecipeCard';
 import { recipes } from '../data/recipes';
+import { GlobalContext } from '../components/context';
 
 const Home = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filteredRecipes, setFilteredRecipes] = useState(recipes.slice(0, 3));
+  const { searchTerm, setSearchTerm } = useContext( GlobalContext )
+  const [ filteredRecipes, setFilteredRecipes ] = useState(recipes.slice(0, 3));
 
   const handleSearch = (e) => {
     e.preventDefault();

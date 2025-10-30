@@ -1,13 +1,14 @@
 
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Container, Row, Col, Form, Button, InputGroup } from 'react-bootstrap';
 import RecipeCard from '../components/RecipeCard';
 import { recipes, categories } from '../data/recipes';
+import { GlobalContext } from '../components/context';
 
 const Recipes = () => {
   const [filteredRecipes, setFilteredRecipes] = useState(recipes);
   const [activeCategory, setActiveCategory] = useState('all');
-  const [searchTerm, setSearchTerm] = useState('');
+  const { searchTerm, setSearchTerm } = useContext( GlobalContext )
 
   const handleCategoryFilter = (categoryId) => {
     setActiveCategory(categoryId);

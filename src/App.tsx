@@ -1,11 +1,11 @@
 
-import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { GlobalState } from "./components/context"
 
 // Import components
 import Navigation from './components/Navigation';
@@ -14,12 +14,14 @@ import Recipes from './pages/Recipes';
 import Categories from './pages/Categories';
 import RecipeDetail from './pages/RecipeDetail';
 import NotFound from './pages/NotFound';
+import  Footer  from '../src/components/Footer';
 
 const queryClient = new QueryClient();
 
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
+      <GlobalState>
       <TooltipProvider>
         <Toaster />
         <Sonner />
@@ -35,22 +37,11 @@ const App = () => {
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>
-            <footer className="bg-dark text-light py-4 mt-5">
-              <div className="container">
-                <div className="row">
-                  <div className="col-md-6">
-                    <h5>🍳 RecipeHub</h5>
-                    <p className="mb-0">Discover and share amazing recipes from around the world.</p>
-                  </div>
-                  <div className="col-md-6 text-md-end">
-                    <p className="mb-0">&copy; 2025 RecipeHub.</p>
-                  </div>
-                </div>
-              </div>
-            </footer>
+           <Footer/>
           </div>
         </Router>
       </TooltipProvider>
+      </GlobalState>
     </QueryClientProvider>
   );
 };

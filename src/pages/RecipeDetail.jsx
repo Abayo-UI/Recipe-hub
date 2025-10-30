@@ -1,14 +1,21 @@
-
-import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Card, Badge, Button, ListGroup } from 'react-bootstrap';
 import { recipes } from '../data/recipes';
+import { useContext } from 'react';
+import { GlobalContext } from '../components/context';
 
 const RecipeDetail = () => {
   const { id } = useParams();
   const recipe = recipes.find(r => r.id === parseInt(id));
+  const navigate = useNavigate();
+  const { searchTerm, setSearchTerm } = useContext( GlobalContext )
 
-  if (!recipe) {
+  const handleClick = ( category ) => {
+   navigate("/recipes");
+   setSearchTerm( category )
+  }
+
+  if (!recipe) { 
     return (
       <Container className="py-5">
         <Row>
@@ -142,9 +149,11 @@ const RecipeDetail = () => {
         {/* Related Recipes */}
         <Row className="mt-5">
           <Col>
-            <h3 className="h4 mb-4" style={{color: 'var(--dark-brown)'}}>
+            <button style={{ border:"3px solid #ff8c42"}} className='px-3 pt-3 rounded-5' onClick={ () => { handleClick( recipe.category) }}>
+              <h3 className="h4 mb-4 text-center" style={{color: 'var(--dark-brown)'}}>
               More {recipe.category.charAt(0).toUpperCase() + recipe.category.slice(1)} Recipes
             </h3>
+            </button>
             <div className="text-center">
               <Link 
                 to={`/recipes`} 
