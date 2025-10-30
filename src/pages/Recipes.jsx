@@ -1,5 +1,5 @@
 
-import React, { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { Container, Row, Col, Form, Button, InputGroup } from 'react-bootstrap';
 import RecipeCard from '../components/RecipeCard';
 import { recipes, categories } from '../data/recipes';
@@ -33,6 +33,24 @@ const Recipes = () => {
     setFilteredRecipes(filtered);
     setActiveCategory('all');
   };
+
+  // Keep filteredRecipes in sync when searchTerm changes (eg. set from another page)
+  useEffect(() => {
+    if (!searchTerm || searchTerm.trim() === '') {
+      // if there's no search term, don't override an active category filter
+      if (activeCategory === 'all') setFilteredRecipes(recipes);
+      return;
+    }
+
+    const term = searchTerm.toLowerCase();
+    const filtered = recipes.filter(recipe =>
+      recipe.title.toLowerCase().includes(term) ||
+      recipe.category.toLowerCase().includes(term) ||
+      recipe.ingredients.some(ingredient => ingredient.toLowerCase().includes(term))
+    );
+    setFilteredRecipes(filtered);
+    setActiveCategory('all');
+  }, [searchTerm]);
 
   return (
     <div className="py-5">

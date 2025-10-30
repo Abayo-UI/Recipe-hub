@@ -8,11 +8,12 @@ const RecipeDetail = () => {
   const { id } = useParams();
   const recipe = recipes.find(r => r.id === parseInt(id));
   const navigate = useNavigate();
-  const { searchTerm, setSearchTerm } = useContext( GlobalContext )
+  const { setSearchTerm } = useContext( GlobalContext )
 
   const handleClick = ( category ) => {
-   navigate("/recipes");
-   setSearchTerm( category )
+  // set the search term first so the Recipes page can pick it up immediately
+  setSearchTerm( category );
+  navigate("/recipes");
   }
 
   if (!recipe) { 
